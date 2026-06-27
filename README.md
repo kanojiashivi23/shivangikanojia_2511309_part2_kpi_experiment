@@ -1,24 +1,26 @@
-# Business Problem Statement: Onboarding & Activation Campaign Evaluation
+# Onboarding & Activation Campaign Evaluation (Part 2)
 
-### 1. Core Decision to be Made
-Leadership must decide whether to permanently launch and scale the newly designed user onboarding and activation campaign to 100% of the platform's incoming user base, or maintain the existing baseline onboarding framework.
+## 1. Business Problem Statement
 
-### 2. Affected Stakeholders
-*   **Target Users:** Impacts all newly registered subscription-based digital product users by fundamentally altering their first-time user experience (FTUE), product orientation, and early product interactions.
-*   **Internal Teams:** Direct operational impact on the Product Engineering, Customer Success, and Growth Marketing teams who will own the long-term support, scaling, and feature iterations of the new pipeline.
-*   **Executive Leadership:** Impacts corporate financial forecasting, resource allocation budgets, and strategic user-acquisition roadmap targets.
+### A. Core Decision to be Made
+Executive leadership must determine whether to scale and deploy the new user onboarding and activation campaign experience to 100% of all incoming platform registrations, continue running the controlled trial to collect additional data, or reject the treatment and retain the existing baseline onboarding framework.
 
-### 3. Success Metrics to Improve
-The primary objective of this intervention is to significantly optimize early user engagement and maximize the conversion rate from trial/free sign-ups into long-term paid subscriptions.
+### B. Impacted Stakeholders
+*   **Target Users:** Directly alters the first-time user experience (FTUE) for all future sign-ups, shaping their initial product orientation, activation velocity, and long-term engagement.
+*   **Customer Support & Operations:** Affected by changes in support ticket velocity, customer confusion patterns, and immediate processing requests (such as refund loops) resulting from the new onboarding flow.
+*   **Product & Growth Marketing Teams:** Impacted regarding future roadmap prioritizations, engineering maintenance, and promotional campaign budget allocations.
 
-### 4. Guardrail Risks to Monitor
-Before scaling the treatment globally, the following operational risks must be rigorously evaluated to prevent systematic value destruction:
-*   **Technical Degradation:** Unintended spikes in early page load times, interface latency, sign-up abandonment, or onboarding completion drop-offs.
-*   **Negative Downstream Churn:** A scenario where the new campaign artificially inflates early conversions via aggressive prompts, leading to high user dissatisfaction and customer churn within the first 30–60 days.
-*   **Increased Support Velocity:** Spikes in support ticket volume stemming from user confusion or bugs within the new onboarding interface.
+### C. Primary Success Metric to Improve
+The ultimate objective of this onboarding intervention is to drive a statistically significant increase in the **Paid Conversion Rate (`converted_to_paid`)**, converting a higher percentage of signed-up users into long-term, revenue-generating subscribers.
 
-### 5. Required Evidence for Recommendation
-To justify a full global rollout to leadership, the recommendation must be backed by:
-*   **Statistical Significance:** A clear, mathematically validated improvement in the primary success metric, proving the performance lift isn't a result of random sample variation ($p\text{-value} < 0.05$).
-*   **Guardrail Stability:** Empirically verified proof that guardrail metrics (unsubscription rates, technical errors) remained completely neutral or improved during the trial period.
-*   **Financial Feasibility:** A projected positive return on investment (ROI) demonstrating that the long-term customer lifetime value (LTV) gains safely outweigh the engineering costs required to implement the changes.
+### D. Operational Risks & Guardrails to Monitor
+Optimizing for conversion blindly introduces substantial business risks. The following guardrail metrics must be closely monitored to ensure short-term gains do not degrade overall platform health:
+*   **Support Ticket Friction:** Spikes in 30-day support tickets (`support_tickets_30d`) indicating user confusion or technical friction in the new flow.
+*   **Financial Reductions:** A significant rise in immediate refund requests (`refund_requested`), which would offset conversion gains and signal low-quality conversions or accidental sign-ups.
+*   **Engagement Dilution:** Ensuring that an increase in conversion doesn't pull in low-intent users who drag down overall platform utilization and average product engagement scores (`engagement_score`).
+
+### E. Required Evidence for Recommendation
+Before a global rollout recommendation can be finalized, leadership requires the following empirical evidence:
+1.  **Statistical Validity:** A rigorous hypothesis test (two-sample proportion test) confirming that the lift in the Paid Conversion Rate is statistically significant, with a $p\text{-value} < 0.05$.
+2.  **Guardrail Neutrality or Improvement:** Statistical verification that refund rates and support ticket volumes in the treatment group have not significantly degraded compared to the control group.
+3.  **Financial Value Lift:** Empirically higher average 30-day revenue (`revenue_30d`) per user to justify the long-term operational costs of scaling the infrastructure.
