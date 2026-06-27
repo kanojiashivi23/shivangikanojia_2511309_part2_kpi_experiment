@@ -61,3 +61,33 @@ If a team optimizes for the Paid Conversion Rate without reviewing counter-balan
 * **The "Tricked-User" Phenomenon:** The team might implement high-pressure onboarding flows, hidden auto-renewal clauses, or aggressive pop-ups. This artificially forces a spike in short-term conversions, but triggers a massive wave of immediate **refund requests (`refund_requested`)** and customer dissatisfaction.
 * **Customer Support Overload:** Confusing or pushy onboarding elements can result in an unmanageable spike in **support tickets (`support_tickets_30d`)**, inflating operational costs and wiping out the profit margins gained from the conversion lift.
 * **High Downstream Churn:** Users who are pushed into paying before understanding the core product value will cancel their subscriptions in month two, creating an unsustainable "leaky bucket" business model.
+
+## 3. KPI Tree Architecture
+
+The hierarchical structure below maps out how our operational sub-drivers feed directly into our primary drivers, which ultimately impact the baseline North Star Metric.
+
+```text
+               🌟 NORTH STAR METRIC (Tier 0)
+         [ Paid Conversion Rate (converted_to_paid) ]
+                          │
+         ┌────────────────┼────────────────┐
+         ▼                                 ▼
+   PRIMARY DRIVERS (Tier 1)         🛡️ GUARDRAIL METRICS (Counter-Balancing)
+ ├── Onboarding Completion Rate     ├── Avg Support Ticket Volume (support_tickets_30d)
+ ├── Trial Activation Rate          ├── Total Refund Requests (refund_requested)
+ └── Avg 30-Day Revenue Scale       └── Downstream Post-Trial Unsubscribe Rate
+         │
+         ▼
+   SUB-DRIVERS (Tier 2 Diagnostic Inputs)
+   ├── Under Onboarding Completion Rate:
+   │    ├── Landing Page Visit Velocity (visited_landing_page)
+   │    └── Onboarding Flow Step Retention Rate
+   │
+   ├── Under Trial Activation Rate:
+   │    ├── Feature Adoption Engagement Score (engagement_score)
+   │    └── Trial Session Frequency
+   │
+   └── Under Average 30-Day Revenue Scale:
+        ├── Premium Plan Tier Mix Ratio (plan_type splits)
+        └── Conversion Velocity Pace (days_to_convert)
+  
