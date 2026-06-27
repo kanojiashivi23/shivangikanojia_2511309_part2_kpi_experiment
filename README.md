@@ -62,6 +62,7 @@ If a team optimizes for the Paid Conversion Rate without reviewing counter-balan
 * **Customer Support Overload:** Confusing or pushy onboarding elements can result in an unmanageable spike in **support tickets (`support_tickets_30d`)**, inflating operational costs and wiping out the profit margins gained from the conversion lift.
 * **High Downstream Churn:** Users who are pushed into paying before understanding the core product value will cancel their subscriptions in month two, creating an unsustainable "leaky bucket" business model.
 
+
 ## 3. KPI Tree Architecture
 
 The hierarchical structure below maps out how our operational sub-drivers feed directly into our primary drivers, which ultimately impact the baseline North Star Metric.
@@ -90,4 +91,34 @@ The hierarchical structure below maps out how our operational sub-drivers feed d
    └── Under Average 30-Day Revenue Scale:
         ├── Premium Plan Tier Mix Ratio (plan_type splits)
         └── Conversion Velocity Pace (days_to_convert)
-  
+
+
+```
+
+## 4. Data Cleaning, Preparation & Quality Audit
+
+The raw experimental data was audited and cleaned within `analysis/experiment_analysis.xlsx` to ensure mathematical validity before running hypothesis tests.
+
+### A. Data Quality Checklist & Actions Taken
+
+| Check Category | Issue Identified | Action / Handling Mechanism |
+| :--- | :--- | :--- |
+| **Duplicate User IDs** | 8 duplicate user IDs (16 system log clones total) found at the bottom of the ledger. | Permanently removed the 8 redundant clones, reducing the baseline count from **1,408 to 1,400 unique users**. |
+| **Missing Values** | `device_type` (18 blanks), `traffic_source` (24 blanks), and `engagement_score` (14 blanks). | String blanks were imputed with `"Unknown"`. Missing `engagement_score` rows were replaced using group mean imputation (Control: 57.0, Treatment: 62.9). |
+| **Invalid Binaries** | `visited_landing_page`, `started_trial`, `completed_onboarding`, `converted_to_paid`, `refund_requested`. | **0 invalid entries found**. Verified that all values are strictly binary integers (`0` or `1`). |
+| **Revenue Outliers** | Two extreme values ($8,610.72 and $6,788.95) skewing the distribution. | Retained the rows to preserve true financial performance, but flagged them as high earners to monitor variance impacts. |
+| **Segment Split** | Randomization verification across region, device, and traffic cohorts. | **Confirmed clean split**. A cross-tabulation check shows balanced sample sizes across all groups, validating the experiment's randomization. |
+
+---
+
+### B. Baseline Group Sample Volume
+After performing the structural deduplication loop, our final clean experiment cohorts are structured as follows:
+*   **Control Group (Baseline Experience):** 685 unique users
+*   **Treatment Group (New Onboarding Flow):** 715 unique users
+*   **Total Valid Dataset Sample Size ($N$):** 1,400 unique users
+
+
+
+
+
+
