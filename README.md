@@ -1,141 +1,67 @@
-# Onboarding & Activation Campaign Evaluation (Part 2)
+# Product Onboarding Experimentation & KPI Optimization Framework
 
-## 1. Business Problem Statement
-
-### A. Core Decision to be Made
-Executive leadership must determine whether to scale and deploy the new user onboarding and activation campaign experience to 100% of all incoming platform registrations, continue running the controlled trial to collect additional data, or reject the treatment and retain the existing baseline onboarding framework.
-
-### B. Impacted Stakeholders
-*   **Target Users:** Directly alters the first-time user experience (FTUE) for all future sign-ups, shaping their initial product orientation, activation velocity, and long-term engagement.
-*   **Customer Support & Operations:** Affected by changes in support ticket velocity, customer confusion patterns, and immediate processing requests (such as refund loops) resulting from the new onboarding flow.
-*   **Product & Growth Marketing Teams:** Impacted regarding future roadmap prioritizations, engineering maintenance, and promotional campaign budget allocations.
-
-### C. Primary Success Metric to Improve
-The ultimate objective of this onboarding intervention is to drive a statistically significant increase in the **Paid Conversion Rate (`converted_to_paid`)**, converting a higher percentage of signed-up users into long-term, revenue-generating subscribers.
-
-### D. Operational Risks & Guardrails to Monitor
-Optimizing for conversion blindly introduces substantial business risks. The following guardrail metrics must be closely monitored to ensure short-term gains do not degrade overall platform health:
-*   **Support Ticket Friction:** Spikes in 30-day support tickets (`support_tickets_30d`) indicating user confusion or technical friction in the new flow.
-*   **Financial Reductions:** A significant rise in immediate refund requests (`refund_requested`), which would offset conversion gains and signal low-quality conversions or accidental sign-ups.
-*   **Engagement Dilution:** Ensuring that an increase in conversion doesn't pull in low-intent users who drag down overall platform utilization and average product engagement scores (`engagement_score`).
-
-### E. Required Evidence for Recommendation
-Before a global rollout recommendation can be finalized, leadership requires the following empirical evidence:
-1.  **Statistical Validity:** A rigorous hypothesis test (two-sample proportion test) confirming that the lift in the Paid Conversion Rate is statistically significant, with a $p\text{-value} < 0.05$.
-2.  **Guardrail Neutrality or Improvement:** Statistical verification that refund rates and support ticket volumes in the treatment group have not significantly degraded compared to the control group.
-3.  **Financial Value Lift:** Empirically higher average 30-day revenue (`revenue_30d`) per user to justify the long-term operational costs of scaling the infrastructure.
-
-## 2. North Star Metric & Measurement Hierarchy
-
-###  Selected North Star Metric: Paid Conversion Rate (`converted_to_paid`)
-The primary success metric chosen for this controlled business experiment is the **Paid Conversion Rate**, defined as the percentage of total signed-up users who successfully transition into active, revenue-generating paid subscribers within the observation window.
-
-$$\text{Paid Conversion Rate} = \frac{\text{Total Users Converted to Paid}}{\text{Total Signed-up Users}}$$
+##  1. Business Context
+This project evaluates the performance of a newly designed user activation and onboarding campaign versus our legacy configuration. The ultimate objective is to streamline product onboarding velocity, decrease early lifecycle friction, and increase conversion to long-term paid subscriptions.
 
 ---
 
-###  Why This Metric is the Main Success Metric
-In a subscription-based digital product company, early operational milestones like opening an app or completing a profile are highly encouraging, but a business cannot achieve long-term viability without monetization. 
-* **Customer Validation:** A user transitioning from a free trial to a paid subscription represents the ultimate form of customer validation—it proves that the onboarding campaign successfully demonstrated enough core product value to compel the user to spend their own money.
-* **Funnel Efficiency:** It captures the performance of the *entire* onboarding funnel, ensuring that we aren't just moving users through the initial setup steps, but effectively driving them toward the final conversion goal.
+##  2. Dataset Description
+The underlying core data represents a 30-day longitudinal user sample containing experimental logs for 1,400 unique customer records following automated data deduplication. Each record monitors top-of-funnel movement, platform engagement score attributes, financial transaction flags, and support desk data points.
 
 ---
 
-###  Why Other Metrics are Supporting Metrics Instead
-* **`started_trial` and `completed_onboarding` (Upstream Process Indicators):** These are critical behavioral milestones, but they serve as leading metrics rather than final outcomes. A user can complete an onboarding wizard or click "Start Trial" out of curiosity, but if they find no ongoing value, they will drop off before making a payment. Treating them as the North Star can lead to misleading optimization where "completion" spikes but revenue stagnates.
-* **`engagement_score` (Internal Proxy):** While high engagement is strongly correlated with customer satisfaction, it is a non-financial proxy. Free-tier users can generate deep engagement patterns without ever generating recurring revenue, which fails to support a commercial subscription growth model.
-* **`revenue_30d` (Monetary Scale):** While financial, short-term 30-day revenue can be heavily skewed or distorted by a very small group of high-tier premium buyers. Paid Conversion Rate measures the broad, scalable ability of the onboarding experience to convince the average user to subscribe.
+##  3. North Star Metric Selected
+The primary business compass is the **Paid Conversion Rate** (`converted_to_paid`). This metric directly establishes the link between early user activation and core recurring revenue generation.
 
 ---
 
-###  How This Metric Connects to Business Growth
-Optimizing the Paid Conversion Rate directly fuels the core growth engine of a SaaS/subscription business model through a clear economic chain reaction:
-1. **Reduces Customer Acquisition Cost (CAC) Payback:** By converting a higher percentage of users from the same incoming traffic volume, the company extracts more value out of its marketing spend, driving down net acquisition costs.
-2. **Compounds Monthly Recurring Revenue (MRR):** Higher early conversion expands the broad subscriber baseline, providing more predictable capital to reinvest back into product development.
-3. **Maximizes Customer Lifetime Value (LTV):** A strong onboarding experience sets a solid foundation for long-term customer relationships, increasing the total lifetime financial value of each acquired user cohort.
+##  4. KPI Tree Summary
+Our core performance drivers map out as an interconnected tracking framework:
+*   **Level 1 (North Star Metric):** Paid Conversion Rate
+*   **Level 2 (Funnel Components):** Landing Page Visit Rate $\rightarrow$ Trial Start Rate $\rightarrow$ Onboarding Completion Rate.
+*   **Level 3 (Guardrail Metrics & Quality Filters):** Average Support Tickets (30d), Refund Requested Rate, and Average Engagement Score.
 
 ---
 
-###  What Could Go Wrong if Optimized Blindly (The Optimization Trap)
-If a team optimizes for the Paid Conversion Rate without reviewing counter-balancing guardrails, it can result in severe structural value destruction:
-* **The "Tricked-User" Phenomenon:** The team might implement high-pressure onboarding flows, hidden auto-renewal clauses, or aggressive pop-ups. This artificially forces a spike in short-term conversions, but triggers a massive wave of immediate **refund requests (`refund_requested`)** and customer dissatisfaction.
-* **Customer Support Overload:** Confusing or pushy onboarding elements can result in an unmanageable spike in **support tickets (`support_tickets_30d`)**, inflating operational costs and wiping out the profit margins gained from the conversion lift.
-* **High Downstream Churn:** Users who are pushed into paying before understanding the core product value will cancel their subscriptions in month two, creating an unsustainable "leaky bucket" business model.
-
-
-## 3. KPI Tree Architecture
-
-The hierarchical structure below maps out how our operational sub-drivers feed directly into our primary drivers, which ultimately impact the baseline North Star Metric.
-
-```text
-               🌟 NORTH STAR METRIC (Tier 0)
-         [ Paid Conversion Rate (converted_to_paid) ]
-                          │
-         ┌────────────────┼────────────────┐
-         ▼                                 ▼
-   PRIMARY DRIVERS (Tier 1)         🛡️ GUARDRAIL METRICS (Counter-Balancing)
- ├── Onboarding Completion Rate     ├── Avg Support Ticket Volume (support_tickets_30d)
- ├── Trial Activation Rate          ├── Total Refund Requests (refund_requested)
- └── Avg 30-Day Revenue Scale       └── Downstream Post-Trial Unsubscribe Rate
-         │
-         ▼
-   SUB-DRIVERS (Tier 2 Diagnostic Inputs)
-   ├── Under Onboarding Completion Rate:
-   │    ├── Landing Page Visit Velocity (visited_landing_page)
-   │    └── Onboarding Flow Step Retention Rate
-   │
-   ├── Under Trial Activation Rate:
-   │    ├── Feature Adoption Engagement Score (engagement_score)
-   │    └── Trial Session Frequency
-   │
-   └── Under Average 30-Day Revenue Scale:
-        ├── Premium Plan Tier Mix Ratio (plan_type splits)
-        └── Conversion Velocity Pace (days_to_convert)
-
-
-```
-
-## 4. Data Cleaning, Preparation & Quality Audit
-
-The raw experimental data was audited and cleaned within `analysis/experiment_analysis.xlsx` to ensure mathematical validity before running hypothesis tests.
-
-### A. Data Quality Checklist & Actions Taken
-
-| Check Category | Issue Identified | Action / Handling Mechanism |
-| :--- | :--- | :--- |
-| **Duplicate User IDs** | 8 duplicate user IDs (16 system log clones total) found at the bottom of the ledger. | Permanently removed the 8 redundant clones, reducing the baseline count from **1,408 to 1,400 unique users**. |
-| **Missing Values** | `device_type` (18 blanks), `traffic_source` (24 blanks), and `engagement_score` (14 blanks). | String blanks were imputed with `"Unknown"`. Missing `engagement_score` rows were replaced using group mean imputation (Control: 57.0, Treatment: 62.9). |
-| **Invalid Binaries** | `visited_landing_page`, `started_trial`, `completed_onboarding`, `converted_to_paid`, `refund_requested`. | **0 invalid entries found**. Verified that all values are strictly binary integers (`0` or `1`). |
-| **Revenue Outliers** | Two extreme values ($8,610.72 and $6,788.95) skewing the distribution. | Retained the rows to preserve true financial performance, but flagged them as high earners to monitor variance impacts. |
-| **Segment Split** | Randomization verification across region, device, and traffic cohorts. | **Confirmed clean split**. A cross-tabulation check shows balanced sample sizes across all groups, validating the experiment's randomization. |
+##  5. Experiment Analysis Approach
+Raw experimental logs were aggregated, cleaned, and evaluated using an analytical structure inside Excel:
+*   **Deduplication:** Dropped 8 exact duplicate user rows, retaining a clean 1,400 user profile base.
+*   **Imputation:** Missing text variables (`device_type`, `traffic_source`) were categorized as `"Unknown"`. Missing numeric engagement layers were imputed safely using cohort group means.
+*   **Segmentation:** Segmented data by region, device type, and acquisition channel to uncover hidden variances.
 
 ---
 
-### B. Baseline Group Sample Volume
-After performing the structural deduplication loop, our final clean experiment cohorts are structured as follows:
-*   **Control Group (Baseline Experience):** 685 unique users
-*   **Treatment Group (New Onboarding Flow):** 715 unique users
-*   **Total Valid Dataset Sample Size ($N$):** 1,400 unique users
-
-## 5. Experiment Summary & Performance Benchmarks
-
-The core performance profiles comparing the existing experience (Control) against the new campaign experience (Treatment) have been aggregated within `outputs/experiment_summary.xlsx`.
-
-### A. Core Metric Dashboard Results
-*   **Top-of-Funnel Lift:** The treatment experience drove substantial process improvements, lifting the **Landing Page Visit Rate** from **63.65% to 72.59%**, and **Onboarding Completion** from **15.62% to 21.26%**.
-*   **North Star Impact:** Our primary success metric, the **Paid Conversion Rate**, achieved an absolute lift of **+3.78%**, jumping from **3.21% in Control to 6.99% in Treatment**.
-*   **Friction Warnings:** The faster, high-converting flow introduced noticeable support debt—the **Support Ticket Rate** shifted upward from **16.79% to 24.34%**, and the Treatment group registered **3 financial refund requests**, whereas the Control group maintained **0**.
-*   **Revenue Quality Nuance:** While Average Revenue Per User (ARPU) grew slightly (\$51.75 to \$53.88), the **Average Revenue Per Converted User dropped significantly from \$1,630.10 to \$770.41**. This indicates that while the new campaign converts a higher *volume* of users, it leans heavily on lower-tier plan options.
+##  6. Hypothesis Test Summary
+*   **Metric:** Paid Conversion Rate
+*   **Framework:** One-Tailed Two-Sample Proportions $Z\text{-test}$ ($\alpha = 0.05$).
+*   **Results:** Control Conversion = 3.17%, Treatment Conversion = 6.99%. 
+*   **Statistical Evidence:** Observed $Z\text{-Score} = 3.2519$, One-Tailed $p\text{-value} = 0.000573$.
+*   **Outcome:** Reject Null Hypothesis. The absolute performance lift of $+3.82\%$ is highly statistically significant with $>99.9\%$ confidence.
 
 ---
 
-### B. Selected Segment Performance Insights
-1.  **Traffic Source Invariants:** Users arriving via **Paid Search** showed the highest sensitivity to the new onboarding flow, with their Paid Conversion Rate leaping from **3.21% up to 9.09%**.
-2.  **Geographical Highs:** The **West Region** responded best to the campaign experience, showing the strongest single conversion layer outcome at **8.38%** (compared to a baseline of 3.38% in Control).
-3.  **Fulfillment Across Devices:** Both **Mobile** and **Desktop** interfaces scaled uniformly (+4.07% and +3.51% conversion lifts respectively), confirming a stable cross-platform layout experience.
+##  7. Guardrail Metrics Considered
+To ensure platform safety, three defensive metrics were cross-referenced:
+*   **Average Support Tickets (30 Days):** Rose from 0.22 to 0.37 (+0.15). *Identified as an operational support queue volume risk (+68.1% relative increase).*
+*   **Refund Requested Rate:** Safely hovered at 0.42% for the Treatment variation, passing financial viability checks.
+*   **Average Engagement Score:** Expanded significantly from 57.03 to 62.94 (+5.91 points), confirming post-conversion quality.
 
+---
 
+##  8. Final Recommendation
+**Launch Globally with Targeted Support Planning.** Route 100% of live traffic to the new onboarding layout immediately due to the massive conversion double and engagement spikes. However, hold back the `Social Media` traffic subset for design adjustments, as it underperformed baseline conversion rules (dropping from 7.75% to 6.06%).
 
+---
 
+##  9. Assumptions and Limitations
+*   **Assumptions:** Assumes stable product pricing profiles and no platform server outages during the 30-day testing window.
+*   **Limitations:** The experiment uncovered a notable relative increase (+68.1%) in customer support queue velocity, creating an operational bottleneck that must be managed. 
 
+---
+
+##  10. Screenshots Included
+The verification artifacts are mapped across the tracking paths below:
+*   `screenshots/summary_metrics.png`: Captures the `Guardrail Metrics Analysis` performance sheet dashboard.
+*   `screenshots/hypothesis_test_output.png`: Captures the manual calculation validation matrix and final decision rules.
+*   `screenshots/kpi_tree_preview.png`: Provides a visual look at our behavioral tree tracking nodes.
 
