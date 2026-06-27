@@ -117,6 +117,23 @@ After performing the structural deduplication loop, our final clean experiment c
 *   **Treatment Group (New Onboarding Flow):** 715 unique users
 *   **Total Valid Dataset Sample Size ($N$):** 1,400 unique users
 
+## 5. Experiment Summary & Performance Benchmarks
+
+The core performance profiles comparing the existing experience (Control) against the new campaign experience (Treatment) have been aggregated within `outputs/experiment_summary.xlsx`.
+
+### A. Core Metric Dashboard Results
+*   **Top-of-Funnel Lift:** The treatment experience drove substantial process improvements, lifting the **Landing Page Visit Rate** from **63.65% to 72.59%**, and **Onboarding Completion** from **15.62% to 21.26%**.
+*   **North Star Impact:** Our primary success metric, the **Paid Conversion Rate**, achieved an absolute lift of **+3.78%**, jumping from **3.21% in Control to 6.99% in Treatment**.
+*   **Friction Warnings:** The faster, high-converting flow introduced noticeable support debt—the **Support Ticket Rate** shifted upward from **16.79% to 24.34%**, and the Treatment group registered **3 financial refund requests**, whereas the Control group maintained **0**.
+*   **Revenue Quality Nuance:** While Average Revenue Per User (ARPU) grew slightly (\$51.75 to \$53.88), the **Average Revenue Per Converted User dropped significantly from \$1,630.10 to \$770.41**. This indicates that while the new campaign converts a higher *volume* of users, it leans heavily on lower-tier plan options.
+
+---
+
+### B. Selected Segment Performance Insights
+1.  **Traffic Source Invariants:** Users arriving via **Paid Search** showed the highest sensitivity to the new onboarding flow, with their Paid Conversion Rate leaping from **3.21% up to 9.09%**.
+2.  **Geographical Highs:** The **West Region** responded best to the campaign experience, showing the strongest single conversion layer outcome at **8.38%** (compared to a baseline of 3.38% in Control).
+3.  **Fulfillment Across Devices:** Both **Mobile** and **Desktop** interfaces scaled uniformly (+4.07% and +3.51% conversion lifts respectively), confirming a stable cross-platform layout experience.
+
 
 
 
